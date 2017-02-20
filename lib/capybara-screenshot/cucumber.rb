@@ -5,7 +5,8 @@ Before do |scenario|
 end
 
 After do |scenario|
-  if Capybara::Screenshot.autosave_on_failure && scenario.failed?
+  current_url = Capybara.page.current_url != '' rescue true
+  if Capybara::Screenshot.autosave_on_failure && scenario.failed? && current_url
     Capybara.using_session(Capybara::Screenshot.final_session_name) do
       filename_prefix = Capybara::Screenshot.filename_prefix_for(:cucumber, scenario)
 
